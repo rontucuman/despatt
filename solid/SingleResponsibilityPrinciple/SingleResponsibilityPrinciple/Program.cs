@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace SingleResponsibilityPrinciple
@@ -30,20 +31,16 @@ namespace SingleResponsibilityPrinciple
     {
       return string.Join(Environment.NewLine, _entries);
     }
+  }
 
-    public void Save(string fileName)
+  public class Persistance
+  {
+    public void SaveToFile(Journal journal, string fileName, bool overwrite = false)
     {
-      File.WriteAllText(fileName, ToString());
-    }
-
-    public static Journal Load(string fileName)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void Load(Uri uri)
-    {
-      throw new NotImplementedException();
+      if (overwrite || !File.Exists(fileName))
+      {
+        File.WriteAllText(fileName, journal.ToString());
+      }
     }
   }
 
@@ -55,6 +52,11 @@ namespace SingleResponsibilityPrinciple
       journal.AddEntry("Today was cold");
       journal.AddEntry("Today was a good day for ice cream");
       Console.WriteLine(journal);
+
+      Persistance persistance = new Persistance();
+      string fileName = @"c:\temp\journal.txt";
+      persistance.SaveToFile(journal, fileName, true );
+      Process.Start(fileName);
     }
   }
 }
