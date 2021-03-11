@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SingleResponsibilityPrinciple
 {
@@ -28,6 +29,21 @@ namespace SingleResponsibilityPrinciple
     public override string ToString()
     {
       return string.Join(Environment.NewLine, _entries);
+    }
+
+    public void Save(string fileName)
+    {
+      File.WriteAllText(fileName, ToString());
+    }
+
+    public static Journal Load(string fileName)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void Load(Uri uri)
+    {
+      throw new NotImplementedException();
     }
   }
 
